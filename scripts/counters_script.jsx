@@ -37,7 +37,7 @@ const counterData = {
         "fontSize": 8,
         "numRows": 3,
         "numColumns": 4,
-        "radius": 45,
+        "radius": 22.5,
         "bottomLeft": [27.0, 123.8],
         "bottomRight": [173.8, 124.0],
         "topRight": [173.6, 28.2]
@@ -46,7 +46,7 @@ const counterData = {
         "fontSize": 7,
         "numRows": 3,
         "numColumns": 5,
-        "radius": 35,
+        "radius": 17.5,
         "bottomLeft": [22.07, 123.7],
         "bottomRight": [178.6, 124.0],
         "topRight": [178.5, 28.2]
@@ -55,7 +55,7 @@ const counterData = {
         "fontSize": 6,
         "numRows": 5,
         "numColumns": 7,
-        "radius": 25,
+        "radius": 12.5,
         "bottomLeft": [16.1, 133.2],
         "bottomRight": [184.0, 134.0],
         "topRight": [184.0, 18.8]
@@ -193,10 +193,10 @@ function generateDocument() {
             var yPt = -mmToPoints(y) // Illustrator y-axis goes downward
 
             var circle = document.pathItems.ellipse(
-                yPt + radiusPt / 2, // top coordinate
-                xPt - radiusPt / 2, // left coordinate
-                radiusPt,           // width
-                radiusPt            // height
+                yPt + radiusPt, // top coordinate
+                xPt - radiusPt, // left coordinate
+                radiusPt * 2,           // width
+                radiusPt * 2            // height
             )
 
             circle.filled = false
@@ -204,14 +204,14 @@ function generateDocument() {
             circle.strokeWidth = 0.5
             circle.strokeColor = guideSpot // Or use grey, whiteSpot, etc.
 
-            var innerRadius = radiusPt - mmToPoints(12) // Margin inside the circle
+            var innerRadius = radiusPt - mmToPoints(7) // Margin inside the circle
 
             // Draw inner path for type-on-path
             var innerCircle = document.pathItems.ellipse(
-                yPt + innerRadius / 2, // top
-                xPt - innerRadius / 2, // left
-                innerRadius,
-                innerRadius
+                yPt + innerRadius, // top
+                xPt - innerRadius, // left
+                innerRadius * 2,
+                innerRadius * 2
             )
 
             innerCircle.stroked = false
@@ -229,9 +229,9 @@ function generateDocument() {
 
             // Rotate to top
             var textWidth = pathText.width
-            var radius = innerRadius; // already in points
+            // var textWidth = pathText.textRange.length
 
-            var angleRadians = textWidth / radius;
+            var angleRadians = textWidth / innerRadius;
             var angleDegrees = angleRadians * (180 / Math.PI);
 
             var startAngle = -90 - (angleDegrees / 2);
@@ -271,7 +271,7 @@ function generateDocument() {
             }
 
             diceInstance.position = [xPt - diceInstance.width / 2, yPt + diceInstance.height / 2]
-            diceInstance.position = [diceInstance.position[0], diceInstance.position[1] - innerRadius / 2]
+            diceInstance.position = [diceInstance.position[0], diceInstance.position[1] - innerRadius]
 
             diceInstance.embed()
 
