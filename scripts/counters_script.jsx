@@ -264,9 +264,9 @@ function generateDocument() {
             var diceInstance
 
             if (jobData.color === "White") {
-                diceInstance = baseDiceWhite.duplicate()
-            } else if (jobData.color === "Black") {
                 diceInstance = baseDiceBlack.duplicate()
+            } else if (jobData.color === "Black") {
+                diceInstance = baseDiceWhite.duplicate()
             } else {
                 diceInstance = ( (column * activeJig.numRows + row) % 2 === 0 )
                     ? baseDiceBlack.duplicate()
