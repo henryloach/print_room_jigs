@@ -231,7 +231,7 @@ function generateDocument() {
             pathText.textRange.characterAttributes.size = mmToPoints(counterData[jobData.size].fontSize) * fontData[fontName].sizeFactor
 
             // Rotate to top
-            var textLength = pathText.width
+            var textWidth = pathText.width
             var radius = innerRadius; // already in points
 
             var angleRadians = textWidth / radius;
