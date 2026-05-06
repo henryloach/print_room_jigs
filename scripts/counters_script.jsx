@@ -327,6 +327,28 @@ function generateDocument() {
         return newCMYKColor
     }
 
+    function drawArc(cx, cy, r, startDeg, endDeg) {
+        var steps = 20;
+        var path = document.pathItems.add();
+        path.stroked = true;
+        path.filled = false;
+
+        var points = [];
+
+        for (var i = 0; i <= steps; i++) {
+            var t = i / steps;
+            var angle = (startDeg + t * (endDeg - startDeg)) * Math.PI / 180;
+
+            var px = cx + r * Math.cos(angle);
+            var py = cy + r * Math.sin(angle);
+
+            points.push([px, py]);
+        }
+
+        path.setEntirePath(points);
+        return path;
+    }
+
     // Units
     function mmToPoints(mm) { return mm * 72 / 25.4; }
     function pointsToMm(pts) { return pts * 25.4 / 72; }
