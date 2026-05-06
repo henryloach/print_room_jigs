@@ -274,7 +274,8 @@ function generateDocument() {
             }
 
             // Position it
-            diceInstance.position = [xPt - diceInstance.width / 2, yPt - mmToPoints(13.5)]
+            diceInstance.position = [xPt - diceInstance.width / 2, yPt + diceInstance.height / 2]
+            diceInstance.position = [diceInstance.position[0], diceInstance.position[1] - innerRadius / 2]
 
             // Lock it in (this is the magic line)
             diceInstance.embed()
