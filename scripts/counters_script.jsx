@@ -167,14 +167,14 @@ function generateDocument() {
 
     var diceBlackFile = new File("C:\\Users\\Roland\\Documents\\swiss_jigs\\assets\\Dice_Black.ai")
     var diceWhiteFile = new File("C:\\Users\\Roland\\Documents\\swiss_jigs\\assets\\Dice_White.ai")
-    var dicePrimerFile = new File("C:\\Users\\Roland\\Documents\\swiss_jigs\\assets\\Dice_Primer.ai")
+    //var dicePrimerFile = new File("C:\\Users\\Roland\\Documents\\swiss_jigs\\assets\\Dice_Primer.ai")
 
     var baseDiceBlack = document.placedItems.add()
     baseDiceBlack.file = diceBlackFile
     var baseDiceWhite = document.placedItems.add()
     baseDiceWhite.file = diceWhiteFile
-    var baseDicePrimer = document.placedItems.add()
-    baseDicePrimer.file = dicePrimerFile
+    // var baseDicePrimer = document.placedItems.add()
+    // baseDicePrimer.file = dicePrimerFile
 
     for (row = 0; row < activeJig.numRows; row++) {
         for (column = 0; column < activeJig.numColumns; column++) {
@@ -206,7 +206,7 @@ function generateDocument() {
             circle.stroked = true
             circle.strokeWidth = 0.5
             circle.strokeColor = guideSpot // Or use grey, whiteSpot, etc.
-
+		
             var innerRadius = radiusPt - mmToPoints(12) // Margin inside the circle
 
             // Draw inner path for type-on-path
@@ -251,7 +251,7 @@ function generateDocument() {
             } else if (jobData.color === 'Black') {
                 pathText.textRange.characterAttributes.fillColor = whiteSpot
             } else if (jobData.color === '50/50') {
-                if ((column * activeJig.numColumns + row) % 2 == 0) {
+                if ((column * activeJig.numRows + row) % 2 == 0) {
                     pathText.textRange.characterAttributes.fillColor = black
                 } else {
                     pathText.textRange.characterAttributes.fillColor = whiteSpot
@@ -259,8 +259,33 @@ function generateDocument() {
             } else {
                 alert('unreachable')
             }
+
+            // Dice
+            var diceInstance
+
+            if (jobData.color === "White") {
+                diceInstance = baseDiceWhite.duplicate()
+            } else if (jobData.color === "Black") {
+                diceInstance = baseDiceBlack.duplicate()
+            } else {
+                diceInstance = ( (column * activeJig.numRows + row) % 2 === 0 )
+                    ? baseDiceBlack.duplicate()
+                    : baseDiceWhite.duplicate()
+            }
+
+            // Position it
+            diceInstance.position = [xPt - diceInstance.width / 2, yPt + diceInstance.height / 2]
+            diceInstance.position = [diceInstance.position[0], diceInstance.position[1] - innerRadius / 2]
+
+            // Lock it in (this is the magic line)
+            diceInstance.embed()
+
         }
     }
+
+    baseDiceBlack.remove()
+    baseDiceWhite.remove()
+    //baseDicePrimer.remove()
 
     // Functions
 
