@@ -251,7 +251,7 @@ function generateDocument() {
             } else if (jobData.color === 'Black') {
                 pathText.textRange.characterAttributes.fillColor = whiteSpot
             } else if (jobData.color === '50/50') {
-                if ((column * activeJig.numColumns + row) % 2 == 0) {
+                if ((column * activeJig.numRows + row) % 2 == 0) {
                     pathText.textRange.characterAttributes.fillColor = black
                 } else {
                     pathText.textRange.characterAttributes.fillColor = whiteSpot
@@ -260,7 +260,7 @@ function generateDocument() {
                 alert('unreachable')
             }
 
-                        // Dice
+            // Dice
             var diceInstance
 
             if (jobData.color === "White") {
@@ -268,13 +268,13 @@ function generateDocument() {
             } else if (jobData.color === "Black") {
                 diceInstance = baseDiceBlack.duplicate()
             } else {
-                diceInstance = ( (column * activeJig.numColumns + row) % 2 === 0 )
+                diceInstance = ( (column * activeJig.numRows + row) % 2 === 0 )
                     ? baseDiceBlack.duplicate()
                     : baseDiceWhite.duplicate()
             }
 
             // Position it
-            diceInstance.position = [xPt, yPt]
+            diceInstance.position = [xPt - diceInstance.width / 2, yPt - mmToPoints(13.5)]
 
             // Lock it in (this is the magic line)
             diceInstance.embed()
