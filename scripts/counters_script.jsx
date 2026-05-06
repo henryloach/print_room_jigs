@@ -1,6 +1,6 @@
 const fontData = {
     "Script": {
-        "fullName" : "MonotypeCorsiva", // work
+        "fullName": "MonotypeCorsiva", // work
         // "fullName": "Monotype-Corsiva-Regular", // home
         "sizeFactor": 1,
         "y-nudge": 0.25 / 8.0,
@@ -69,7 +69,6 @@ var jobData = {
     size: "Big",
     text: "debug",
     color: "White",
-    // style: "Wrap",
     font: "Script"
 }
 
@@ -92,16 +91,6 @@ counterColorOptions.selection = "White"
 counterColorOptions.onChange = function () {
     jobData.color = counterColorOptions.selection.text
 }
-
-// text options
-// var counterTextOptionsGroup = textInputWindow.add("group")
-// counterTextOptionsGroup.orientation = "column"
-// counterTextOptionsGroup.add("statictext", undefined, "Counter Text Style")
-// var counterTextOptions = counterTextOptionsGroup.add("dropdownlist", undefined, ["Wrap", "Straight"])
-// counterTextOptions.selection = "Wrap"
-// counterTextOptions.onChange = function () {
-//     jobData.style = counterTextOptions.selection.text
-// }
 
 // font
 var fontOptionsGroup = textInputWindow.add("group")
@@ -241,12 +230,23 @@ function generateDocument() {
             pathText.textRange.characterAttributes.textFont = font
             pathText.textRange.characterAttributes.size = mmToPoints(counterData[jobData.size].fontSize) * fontData[fontName].sizeFactor
 
-            // Colour
+            // Rotate to top
+            var textWidth = pathText.width
+            var radius = innerRadius; // already in points
+
+            var angleRadians = textWidth / radius;
+            var angleDegrees = angleRadians * (180 / Math.PI);
+
+            var startAngle = -90 - (angleDegrees / 2);
+            pathText.rotate(startAngle, true, true, true, true, Transformation.CENTER);
+
+            // Generate Primer Underlay
             var primerText = pathText.duplicate()
             primerText.textRange.characterAttributes.fillColor = primerSpot
             pathText.zOrder(ZOrderMethod.BRINGTOFRONT)
 
-            if (jobData.color === 'White')  { // Colour of counters :S
+            // Colour
+            if (jobData.color === 'White') { // Colour of counters :S
                 pathText.textRange.characterAttributes.fillColor = black
             } else if (jobData.color === 'Black') {
                 pathText.textRange.characterAttributes.fillColor = whiteSpot
@@ -322,15 +322,6 @@ function generateDocument() {
             textFrame.position[1] + textFrame.height / 2
         ]
     }
-
-    // function constrainTextWidth(textFrame) {
-    //     const aspectRatio = textFrame.width / textFrame.height
-
-    //     if (textFrame.width > mmToPoints(formFactor.maxTextWidth)) {
-    //         textFrame.width = mmToPoints(formFactor.maxTextWidth)
-    //         textFrame.height = textFrame.width / aspectRatio
-    //     }
-    // }
 
     function createCMYKColor(cyan, magenta, yellow, key) {
         var newCMYKColor = new CMYKColor()
