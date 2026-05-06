@@ -206,7 +206,7 @@ function generateDocument() {
             circle.stroked = true
             circle.strokeWidth = 0.5
             circle.strokeColor = guideSpot // Or use grey, whiteSpot, etc.
-		
+
             var innerRadius = radiusPt - mmToPoints(12) // Margin inside the circle
 
             // Draw inner path for type-on-path
@@ -268,7 +268,7 @@ function generateDocument() {
             } else if (jobData.color === "Black") {
                 diceInstance = baseDiceWhite.duplicate()
             } else {
-                diceInstance = ( (column * activeJig.numRows + row) % 2 === 0 )
+                diceInstance = ((column * activeJig.numRows + row) % 2 === 0)
                     ? baseDiceBlack.duplicate()
                     : baseDiceWhite.duplicate()
             }
