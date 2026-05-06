@@ -167,14 +167,11 @@ function generateDocument() {
 
     var diceBlackFile = new File("C:\\Users\\Roland\\Documents\\swiss_jigs\\assets\\Dice_Black.ai")
     var diceWhiteFile = new File("C:\\Users\\Roland\\Documents\\swiss_jigs\\assets\\Dice_White.ai")
-    //var dicePrimerFile = new File("C:\\Users\\Roland\\Documents\\swiss_jigs\\assets\\Dice_Primer.ai")
 
     var baseDiceBlack = document.placedItems.add()
     baseDiceBlack.file = diceBlackFile
     var baseDiceWhite = document.placedItems.add()
     baseDiceWhite.file = diceWhiteFile
-    // var baseDicePrimer = document.placedItems.add()
-    // baseDicePrimer.file = dicePrimerFile
 
     for (row = 0; row < activeJig.numRows; row++) {
         for (column = 0; column < activeJig.numColumns; column++) {
@@ -273,11 +270,9 @@ function generateDocument() {
                     : baseDiceWhite.duplicate()
             }
 
-            // Position it
             diceInstance.position = [xPt - diceInstance.width / 2, yPt + diceInstance.height / 2]
             diceInstance.position = [diceInstance.position[0], diceInstance.position[1] - innerRadius / 2]
 
-            // Lock it in (this is the magic line)
             diceInstance.embed()
 
         }
@@ -285,7 +280,6 @@ function generateDocument() {
 
     baseDiceBlack.remove()
     baseDiceWhite.remove()
-    //baseDicePrimer.remove()
 
     // Functions
 
