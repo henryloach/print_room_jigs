@@ -296,6 +296,8 @@ function generateDocument() {
     baseDiceBlack.remove()
     baseDiceWhite.remove()
 
+    app.activeDocument.selection = null
+
     // Functions
 
     function lerp(start, end, amt) {
