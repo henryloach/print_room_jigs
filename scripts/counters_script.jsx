@@ -171,7 +171,7 @@ function generateDocument() {
     tempTextFrame.textRange.characterAttributes.textFont = font
     tempTextFrame.contents = jobData.text
     tempTextFrame.textRange.characterAttributes.size = mmToPoints(counterData[jobData.size].fontSize) * fontData[fontName].sizeFactor
-    var textWidth = pointsToMm(tempTextFrame.width)
+    var textWidth = tempTextFrame.width
     alert(textWidth)
 
     const activeJig = counterData[jobData.size]
@@ -234,17 +234,13 @@ function generateDocument() {
 
             // Rotate to top
             
-            // var textWidth = pathText.textRange.length
-            //alert(textWidth)
-
-            var textAngleRadians = textWidth / innerRadius;
+            var textAngleRadians = textWidth / innerRadius; // This is in points
             var textAngleDegrees = textAngleRadians * (180 / Math.PI);
             alert(textAngleDegrees)
 
             var textStartAngle = - 90 + (textAngleDegrees / 2);
             pathText.rotate(textStartAngle, true, true, true, true, Transformation.CENTER);
-            // pathText.textPath.startTValue = 0
-            // pathText.textPath.endTValue = 2
+
 
             // Generate Primer Underlay
             var primerText = pathText.duplicate()
@@ -283,9 +279,13 @@ function generateDocument() {
             diceInstance.embed()
 
             // Arcs
-            var leftArc = drawArc(xPt, yPt, innerRadius, textStartAngle - 20, 250)
+            var leftArcStart = - 90 + (textAngleDegrees / 2) + 20
+            var leftArcEnd = 250
+            var leftArc = drawArc(xPt, yPt, innerRadius, leftArcStart, leftArcEnd)
             leftArc.strokeWidth = 1
-            var rightArc = drawArc(xPt, yPt, innerRadius, 290, textStartAngle + textAngleDegrees + 20)
+            var rightArcStart = 290
+            var rightArcEnd = - 90 - (textAngleDegrees / 2) - 20
+            var rightArc = drawArc(xPt, yPt, innerRadius, rightArcStart, rightArcEnd)
             rightArc.strokeWidth = 1
 
         }
