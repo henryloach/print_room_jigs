@@ -262,8 +262,6 @@ function generateDocument() {
                 } else {
                     pathText.textRange.characterAttributes.fillColor = whiteSpot
                 }
-            } else {
-                alert('unreachable')
             }
 
             // Dice
