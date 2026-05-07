@@ -138,16 +138,16 @@ function generateDocument() {
 
     // Create
     var document = app.documents.addDocument("Print", preset)
-
+    
     // Artboard
     var artboard = document.artboards[0];
     artboard.artboardRect = [0, 0, document.width, -document.height] // Top-Left is (0, 0), Bottom-Right is (width, -height)
-
+    
     // View
     var view = document.views[0];
     view.zoom = 1.3194352817; // Fit artboard in view (100% zoom)
     view.centerPoint = [document.width / 2, -document.height / 2] // Center the view on the document
-
+    
     // Colors
     var whiteSpot = createSpotColor("RDG_WHITE", [25, 25, 25, 25])
     var primerSpot = createSpotColor("RDG_PRIMER", [50, 0, 100, 10])
@@ -155,36 +155,43 @@ function generateDocument() {
     var grey = createCMYKColor(0, 0, 0, 60)
     var black = createCMYKColor(0, 0, 0, 100)
 
+    
     const colorMap = {
         "White": whiteSpot,
         "Grey": grey,
         "Black": black,
     }
-
-    // Text
+    
+    // Font
+    var fontName = jobData.font
+    var font = app.textFonts.getByName(fontData[fontName].fullName)
+    
+    // Temp text for length
+    var tempTextFrame = document.textFrames.add()
+    tempTextFrame.textRange.characterAttributes.textFont = font
+    tempTextFrame.contents = jobData.text
+    tempTextFrame.textRange.characterAttributes.size = mmToPoints(counterData[jobData.size].fontSize) * fontData[fontName].sizeFactor
+    var textWidth = pointsToMm(tempTextFrame.width)
+    alert(textWidth)
 
     const activeJig = counterData[jobData.size]
-
+    
     var diceBlackFile = new File("C:\\Users\\Roland\\Documents\\swiss_jigs\\assets\\Dice_Black.ai")
     var diceWhiteFile = new File("C:\\Users\\Roland\\Documents\\swiss_jigs\\assets\\Dice_White.ai")
-
+    
     var baseDiceBlack = document.placedItems.add()
     baseDiceBlack.file = diceBlackFile
     var baseDiceWhite = document.placedItems.add()
     baseDiceWhite.file = diceWhiteFile
-
+    
     for (row = 0; row < activeJig.numRows; row++) {
         for (column = 0; column < activeJig.numColumns; column++) {
             var rowAmt = 1 - row / (activeJig.numRows - 1)
             var columnAmt = column / (activeJig.numColumns - 1)
             var x = activeJig.bottomLeft[0] + lerp(0, activeJig.bottomRight[0] - activeJig.bottomLeft[0], columnAmt)
-                + lerp(0, activeJig.topRight[0] - activeJig.bottomRight[0], rowAmt)
+            + lerp(0, activeJig.topRight[0] - activeJig.bottomRight[0], rowAmt)
             var y = activeJig.bottomLeft[1] + lerp(0, activeJig.bottomRight[1] - activeJig.bottomLeft[1], columnAmt)
                 + lerp(0, activeJig.topRight[1] - activeJig.bottomRight[1], rowAmt)
-
-
-            var fontName = jobData.font
-            var font = app.textFonts.getByName(fontData[fontName].fullName)
 
             ///
 
@@ -222,20 +229,22 @@ function generateDocument() {
             pathText.contents = jobData.text
 
             // Font and style
-            var fontName = jobData.font
-            var font = app.textFonts.getByName(fontData[fontName].fullName)
             pathText.textRange.characterAttributes.textFont = font
             pathText.textRange.characterAttributes.size = mmToPoints(counterData[jobData.size].fontSize) * fontData[fontName].sizeFactor
 
             // Rotate to top
-            var textWidth = pathText.width
+            
             // var textWidth = pathText.textRange.length
+            //alert(textWidth)
 
-            var angleRadians = textWidth / innerRadius;
-            var angleDegrees = angleRadians * (180 / Math.PI);
+            var textAngleRadians = textWidth / innerRadius;
+            var textAngleDegrees = textAngleRadians * (180 / Math.PI);
+            alert(textAngleDegrees)
 
-            var startAngle = -90 - (angleDegrees / 2);
-            pathText.rotate(startAngle, true, true, true, true, Transformation.CENTER);
+            var textStartAngle = - 90 + (textAngleDegrees / 2);
+            pathText.rotate(textStartAngle, true, true, true, true, Transformation.CENTER);
+            // pathText.textPath.startTValue = 0
+            // pathText.textPath.endTValue = 2
 
             // Generate Primer Underlay
             var primerText = pathText.duplicate()
@@ -274,6 +283,12 @@ function generateDocument() {
             diceInstance.position = [diceInstance.position[0], diceInstance.position[1] - innerRadius]
 
             diceInstance.embed()
+
+            // Arcs
+            var leftArc = drawArc(xPt, yPt, innerRadius, textStartAngle - 20, 250)
+            leftArc.strokeWidth = 1
+            var rightArc = drawArc(xPt, yPt, innerRadius, 290, textStartAngle + textAngleDegrees + 20)
+            rightArc.strokeWidth = 1
 
         }
     }
