@@ -175,6 +175,8 @@ function generateDocument() {
     tempTextFrame.contents = jobData.text
     tempTextFrame.textRange.characterAttributes.size = mmToPoints(counterData[jobData.size].fontSize) * fontData[fontName].sizeFactor
     var textWidth = tempTextFrame.width
+    var textHeight = tempTextFrame.height
+    tempTextFrame.remove()
 
     //
 
