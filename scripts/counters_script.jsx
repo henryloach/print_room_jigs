@@ -172,10 +172,13 @@ function generateDocument() {
     tempTextFrame.contents = jobData.text
     tempTextFrame.textRange.characterAttributes.size = mmToPoints(counterData[jobData.size].fontSize) * fontData[fontName].sizeFactor
     var textWidth = tempTextFrame.width
-    alert(textWidth)
+
+    //
 
     const activeJig = counterData[jobData.size]
     
+    //
+
     var diceBlackFile = new File("C:\\Users\\Roland\\Documents\\swiss_jigs\\assets\\Dice_Black.ai")
     var diceWhiteFile = new File("C:\\Users\\Roland\\Documents\\swiss_jigs\\assets\\Dice_White.ai")
     
@@ -184,6 +187,8 @@ function generateDocument() {
     var baseDiceWhite = document.placedItems.add()
     baseDiceWhite.file = diceWhiteFile
     
+    //
+
     for (row = 0; row < activeJig.numRows; row++) {
         for (column = 0; column < activeJig.numColumns; column++) {
             var rowAmt = 1 - row / (activeJig.numRows - 1)
@@ -232,12 +237,9 @@ function generateDocument() {
             pathText.textRange.characterAttributes.textFont = font
             pathText.textRange.characterAttributes.size = mmToPoints(counterData[jobData.size].fontSize) * fontData[fontName].sizeFactor
 
-            // Rotate to top
-            
+            // Rotate to top      
             var textAngleRadians = textWidth / innerRadius; // This is in points
             var textAngleDegrees = textAngleRadians * (180 / Math.PI);
-            alert(textAngleDegrees)
-
             var textStartAngle = - 90 + (textAngleDegrees / 2);
             pathText.rotate(textStartAngle, true, true, true, true, Transformation.CENTER);
 
