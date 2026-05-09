@@ -41,7 +41,8 @@ const counterData = {
         "arcRadius": 17,
         "bottomLeft": [27.0, 123.8],
         "bottomRight": [173.8, 124.0],
-        "topRight": [173.6, 28.2]
+        "topRight": [173.6, 28.2],
+        "diceOffset" : 16
     },
     "Medium": {
         "fontSize": 7,
@@ -51,7 +52,8 @@ const counterData = {
         "arcRadius": 13,
         "bottomLeft": [22.07, 123.7],
         "bottomRight": [178.6, 124.0],
-        "topRight": [178.5, 28.2]
+        "topRight": [178.5, 28.2],
+        "diceOffset" : 8.5
     },
     "Small": {
         "fontSize": 6,
@@ -61,7 +63,8 @@ const counterData = {
         "arcRadius": 7,
         "bottomLeft": [16.1, 133.2],
         "bottomRight": [184.0, 134.0],
-        "topRight": [184.0, 18.8]
+        "topRight": [184.0, 18.8],
+        "diceOffset" : 4.5,
     },
 
 }
@@ -221,7 +224,8 @@ function generateDocument() {
             circle.strokeWidth = 0.5
             circle.strokeColor = guideSpot // Or use grey, whiteSpot, etc.
 
-            var innerRadius = radiusPt - mmToPoints(7) // Margin inside the circle
+            var textOffset = 2 * textHeight * (fontData[fontName]["y-nudge"])
+            var innerRadius = radiusPt - mmToPoints(7) - textOffset // Margin inside the circle
 
             // Draw inner path for type-on-path
             var innerCircle = document.pathItems.ellipse(
@@ -281,7 +285,7 @@ function generateDocument() {
             }
 
             diceInstance.position = [xPt - diceInstance.width / 2, yPt + diceInstance.height / 2]
-            diceInstance.position = [diceInstance.position[0], diceInstance.position[1] - innerRadius]
+            diceInstance.position = [diceInstance.position[0], diceInstance.position[1] - mmToPoints(activeJig.diceOffset)]
 
             diceInstance.embed()
 
