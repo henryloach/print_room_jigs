@@ -38,6 +38,7 @@ const counterData = {
         "numRows": 3,
         "numColumns": 4,
         "radius": 22.5,
+        "arcRadius": 17,
         "bottomLeft": [27.0, 123.8],
         "bottomRight": [173.8, 124.0],
         "topRight": [173.6, 28.2]
@@ -46,7 +47,8 @@ const counterData = {
         "fontSize": 7,
         "numRows": 3,
         "numColumns": 5,
-        "radius": 17.5,
+        "radius": 15.5,
+        "arcRadius": 13,
         "bottomLeft": [22.07, 123.7],
         "bottomRight": [178.6, 124.0],
         "topRight": [178.5, 28.2]
@@ -55,7 +57,8 @@ const counterData = {
         "fontSize": 6,
         "numRows": 5,
         "numColumns": 7,
-        "radius": 12.5,
+        "radius": 11.5,
+        "arcRadius": 7,
         "bottomLeft": [16.1, 133.2],
         "bottomRight": [184.0, 134.0],
         "topRight": [184.0, 18.8]
@@ -281,13 +284,15 @@ function generateDocument() {
             diceInstance.embed()
 
             // Arcs
-            var leftArcStart = 90 + ( textAngleDegrees / 2 ) + 20 
+            var arcRadius = mmToPoints(activeJig.arcRadius)
+
+            var leftArcStart = 90 + ( textAngleDegrees / 2 ) + 10 
             var leftArcEnd = 250
-            var leftArc = drawArc(xPt, yPt, innerRadius, leftArcStart, leftArcEnd)
+            var leftArc = drawArc(xPt, yPt, arcRadius, leftArcStart, leftArcEnd)
             leftArc.strokeWidth = 1
-            var rightArcStart = 90 - (textAngleDegrees / 2) - 20
+            var rightArcStart = 90 - (textAngleDegrees / 2) - 10
             var rightArcEnd = - 70
-            var rightArc = drawArc(xPt, yPt, innerRadius, rightArcStart, rightArcEnd)
+            var rightArc = drawArc(xPt, yPt, arcRadius, rightArcStart, rightArcEnd)
             rightArc.strokeWidth = 1
 
         }
