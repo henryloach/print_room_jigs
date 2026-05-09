@@ -279,12 +279,12 @@ function generateDocument() {
             diceInstance.embed()
 
             // Arcs
-            var leftArcStart = - 90 + (textAngleDegrees / 2) + 20
+            var leftArcStart = 90 + ( textAngleDegrees / 2 ) + 20 
             var leftArcEnd = 250
             var leftArc = drawArc(xPt, yPt, innerRadius, leftArcStart, leftArcEnd)
             leftArc.strokeWidth = 1
-            var rightArcStart = 290
-            var rightArcEnd = - 90 - (textAngleDegrees / 2) - 20
+            var rightArcStart = 90 - (textAngleDegrees / 2) - 20
+            var rightArcEnd = - 70
             var rightArc = drawArc(xPt, yPt, innerRadius, rightArcStart, rightArcEnd)
             rightArc.strokeWidth = 1
 
