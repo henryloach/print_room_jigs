@@ -181,6 +181,10 @@ function generateDocument() {
     var textHeight = tempTextFrame.height
     tempTextFrame.remove()
 
+    alert(textWidth)
+
+    const buggerationFactor = 12 / 222.7
+
     //
 
     const activeJig = counterData[jobData.size]
@@ -249,7 +253,7 @@ function generateDocument() {
             // Rotate to top      
             var textAngleRadians = textWidth / innerRadius; // This is in points
             var textAngleDegrees = textAngleRadians * (180 / Math.PI);
-            var textStartAngle = - 90 + (textAngleDegrees / 2);
+            var textStartAngle = - 90 + (textAngleDegrees / 2) - buggerationFactor * textWidth;
             pathText.rotate(textStartAngle, true, true, true, true, Transformation.CENTER);
 
 
@@ -292,11 +296,11 @@ function generateDocument() {
             // Arcs
             var arcRadius = mmToPoints(activeJig.arcRadius)
 
-            var leftArcStart = 90 + ( textAngleDegrees / 2 ) + 10 
+            var leftArcStart = 90 + ( textAngleDegrees / 2 ) + 5 
             var leftArcEnd = 250
             var leftArc = drawArc(xPt, yPt, arcRadius, leftArcStart, leftArcEnd)
             leftArc.strokeWidth = 1
-            var rightArcStart = 90 - (textAngleDegrees / 2) - 10
+            var rightArcStart = 90 - (textAngleDegrees / 2) - 5
             var rightArcEnd = - 70
             var rightArc = drawArc(xPt, yPt, arcRadius, rightArcStart, rightArcEnd)
             rightArc.strokeWidth = 1
