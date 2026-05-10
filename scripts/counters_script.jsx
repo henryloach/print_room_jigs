@@ -224,8 +224,8 @@ function generateDocument() {
             circle.strokeWidth = 0.5
             circle.strokeColor = guideSpot // Or use grey, whiteSpot, etc.
 
-            var textOffset = 2 * textHeight * (fontData[fontName]["y-nudge"])
-            var innerRadius = radiusPt - mmToPoints(7) - textOffset // Margin inside the circle
+            var textOffset = textHeight * (fontData[fontName]["y-nudge"])
+            var innerRadius = mmToPoints(activeJig.arcRadius) - textHeight / 2 // - textOffset // Margin inside the circle
 
             // Draw inner path for type-on-path
             var innerCircle = document.pathItems.ellipse(
