@@ -17,13 +17,13 @@ const fontData = {
     },
     "Serif": {
         "fullName": "Merriweather-Regular",
-        "sizeFactor": 0.8125,
-        "y-nudge": 0.45 / 8.0,
+        "sizeFactor": 0.7,
+        "y-nudge": - 1.0 / 8.0,
     },
     "Sans Serif": {
         "fullName": "Roboto-Medium",
-        "sizeFactor": 0.75,
-        "y-nudge": 0.4 / 8.0,
+        "sizeFactor": 0.65,
+        "y-nudge": - 1.0 / 8.0,
     },
     "Handwritten": {
         "fullName": "Caveat-Regular",
@@ -181,7 +181,7 @@ function generateDocument() {
     var textHeight = tempTextFrame.height
     tempTextFrame.remove()
 
-    const rotationRactor = 12 / 210
+    const rotationRactor = 8.5 / 210
     const arcFactor = 10 / 160
 
     //
@@ -228,7 +228,7 @@ function generateDocument() {
             circle.strokeColor = guideSpot // Or use grey, whiteSpot, etc.
 
             var textOffset = textHeight * (fontData[fontName]["y-nudge"])
-            var innerRadius = mmToPoints(activeJig.arcRadius) - textHeight / 2 // - textOffset // Margin inside the circle
+            var innerRadius = mmToPoints(activeJig.arcRadius) - textHeight / 2 - textOffset // Margin inside the circle
 
             // Draw inner path for type-on-path
             var innerCircle = document.pathItems.ellipse(
