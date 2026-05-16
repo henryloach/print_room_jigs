@@ -295,11 +295,13 @@ function generateDocument() {
             // Arcs
             var arcRadius = mmToPoints(activeJig.arcRadius)
 
-            var leftArcStart = 90 + ( textAngleDegrees / 2 ) + 6 - (arcFactor * textWidth - 1.1)
+
+            var arcGap = 8
+            var leftArcStart = 90 + ( textAngleDegrees / 2 ) + arcGap - (arcFactor * textWidth - 1.1)
             var leftArcEnd = 251
             var leftArc = drawArc(xPt, yPt, arcRadius, leftArcStart, leftArcEnd)
             leftArc.strokeWidth = 1
-            var rightArcStart = 90 - (textAngleDegrees / 2) - 6 + (arcFactor * textWidth - 1.1)
+            var rightArcStart = 90 - (textAngleDegrees / 2) - arcGap + (arcFactor * textWidth - 1.1)
             var rightArcEnd = - 71
             var rightArc = drawArc(xPt, yPt, arcRadius, rightArcStart, rightArcEnd)
             rightArc.strokeWidth = 1
