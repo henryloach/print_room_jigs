@@ -42,7 +42,7 @@ const counterData = {
         "bottomLeft": [27.0, 123.8],
         "bottomRight": [173.8, 124.0],
         "topRight": [173.6, 28.2],
-        "diceOffset" : 16
+        "diceOffset": 16
     },
     "Medium": {
         "fontSize": 7,
@@ -53,7 +53,7 @@ const counterData = {
         "bottomLeft": [22.07, 123.7],
         "bottomRight": [178.6, 124.0],
         "topRight": [178.5, 28.2],
-        "diceOffset" : 8.5
+        "diceOffset": 8.5
     },
     "Small": {
         "fontSize": 6,
@@ -64,7 +64,7 @@ const counterData = {
         "bottomLeft": [16.1, 133.2],
         "bottomRight": [184.0, 134.0],
         "topRight": [184.0, 18.8],
-        "diceOffset" : 4.5,
+        "diceOffset": 4.5,
     },
 
 }
@@ -144,16 +144,16 @@ function generateDocument() {
 
     // Create
     var document = app.documents.addDocument("Print", preset)
-    
+
     // Artboard
     var artboard = document.artboards[0];
     artboard.artboardRect = [0, 0, document.width, -document.height] // Top-Left is (0, 0), Bottom-Right is (width, -height)
-    
+
     // View
     var view = document.views[0];
     view.zoom = 1.3194352817; // Fit artboard in view (100% zoom)
     view.centerPoint = [document.width / 2, -document.height / 2] // Center the view on the document
-    
+
     // Colors
     var whiteSpot = createSpotColor("RDG_WHITE", [25, 25, 25, 25])
     var primerSpot = createSpotColor("RDG_PRIMER", [50, 0, 100, 10])
@@ -161,17 +161,17 @@ function generateDocument() {
     var grey = createCMYKColor(0, 0, 0, 60)
     var black = createCMYKColor(0, 0, 0, 100)
 
-    
+
     const colorMap = {
         "White": whiteSpot,
         "Grey": grey,
         "Black": black,
     }
-    
+
     // Font
     var fontName = jobData.font
     var font = app.textFonts.getByName(fontData[fontName].fullName)
-    
+
     // Temp text for length
     var tempTextFrame = document.textFrames.add()
     tempTextFrame.textRange.characterAttributes.textFont = font
@@ -187,17 +187,17 @@ function generateDocument() {
     //
 
     const activeJig = counterData[jobData.size]
-    
+
     //
 
     var diceBlackFile = new File("C:\\Users\\Roland\\Documents\\swiss_jigs\\assets\\Dice_Black.ai")
     var diceWhiteFile = new File("C:\\Users\\Roland\\Documents\\swiss_jigs\\assets\\Dice_White.ai")
-    
+
     var baseDiceBlack = document.placedItems.add()
     baseDiceBlack.file = diceBlackFile
     var baseDiceWhite = document.placedItems.add()
     baseDiceWhite.file = diceWhiteFile
-    
+
     //
 
     for (row = 0; row < activeJig.numRows; row++) {
@@ -205,7 +205,7 @@ function generateDocument() {
             var rowAmt = 1 - row / (activeJig.numRows - 1)
             var columnAmt = column / (activeJig.numColumns - 1)
             var x = activeJig.bottomLeft[0] + lerp(0, activeJig.bottomRight[0] - activeJig.bottomLeft[0], columnAmt)
-            + lerp(0, activeJig.topRight[0] - activeJig.bottomRight[0], rowAmt)
+                + lerp(0, activeJig.topRight[0] - activeJig.bottomRight[0], rowAmt)
             var y = activeJig.bottomLeft[1] + lerp(0, activeJig.bottomRight[1] - activeJig.bottomLeft[1], columnAmt)
                 + lerp(0, activeJig.topRight[1] - activeJig.bottomRight[1], rowAmt)
 
@@ -296,7 +296,7 @@ function generateDocument() {
             var arcRadius = mmToPoints(activeJig.arcRadius)
 
             var arcGap = 8
-            var leftArcStart = 90 + ( textAngleDegrees / 2 ) + arcGap - (arcFactor * textWidth - 1.1)
+            var leftArcStart = 90 + (textAngleDegrees / 2) + arcGap - (arcFactor * textWidth - 1.1)
             var leftArcEnd = 251
             var leftArc = drawArc(xPt, yPt, arcRadius, leftArcStart, leftArcEnd)
             leftArc.strokeWidth = 1
