@@ -12,7 +12,7 @@ const fontData = {
     },
     "Italic": {
         "fullName": "GentiumBookPlus-Italic",
-        "sizeFactor": 1,
+        "sizeFactor": 1.1,
         "y-nudge": 0.9 / 8.0,
     },
     "Serif": {
